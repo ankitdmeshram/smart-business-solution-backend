@@ -43,3 +43,18 @@ exports.createProject = async (req, res) => {
     });
   }
 };
+
+exports.allProject = async (req, res) => {
+  try {
+    const projects = await Project.find();
+    res.status(200).json({
+      success: true,
+      projects: projects,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error?.message,
+    });
+  }
+};
