@@ -28,7 +28,6 @@ const projectSchema = new mongoose.Schema({
   project_team: [
     {
       type: String,
-      uid: String,
     },
   ],
   create_at: {

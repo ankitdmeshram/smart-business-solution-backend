@@ -4,13 +4,15 @@ const router = express.Router();
 const {
   createProject,
   allProject,
-  updateProduct,
+  updateProject,
+  viewProjectByAccess,
 } = require("../controllers/projectControllers");
 
 router.post("/createproject", createProject);
 
 router.post("/allprojects", allProject);
 
-router.post("/updateproject", updateProduct);
+router.post("/updateproject", updateProject);
+router.post("/viewprojects", viewProjectByAccess);
 
 module.exports = router;
