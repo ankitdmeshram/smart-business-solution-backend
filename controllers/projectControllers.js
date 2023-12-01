@@ -135,7 +135,8 @@ exports.viewProjectByAccess = async (req, res) => {
 exports.deleteProject = async (req, res) => {
   try {
     const { _id, email } = req.body;
-    const project = await Project.findById({ _id: id });
+    const project = await Project.findById({ _id: _id });
+
     if (!project) {
       return res.status(404).json({
         success: false,
@@ -145,16 +146,24 @@ exports.deleteProject = async (req, res) => {
 
     console.log("project", project);
 
-    // await project.findByIdAndDelete({ _id: id });
-    res.status(200).json({
-      success: true,
-      message: "project deleted successfully",
-    });
+    if (project?.owner == email) {
+      await Project.findByIdAndDelete({ _id: _id });
+      res.status(200).json({
+        success: true,
+        message: "project deleted successfully",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "You don't have access to delete",
+      });
+    }
   } catch (error) {
     // console.log(error);
     res.status(500).json({
       success: false,
       message: "project Cannot be deleted successfully",
+      error,
     });
   }
 };
