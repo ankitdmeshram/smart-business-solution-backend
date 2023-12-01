@@ -27,8 +27,6 @@ exports.createProject = async (req, res) => {
       description,
       project_access,
       project_team,
-      created_at,
-      updated_at,
       created_at: created_at,
       updated_at: updated_at,
     });
@@ -130,6 +128,33 @@ exports.viewProjectByAccess = async (req, res) => {
     return res.status(504).json({
       success: false,
       message: `Something went wrong ${err}`,
+    });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  try {
+    const { _id, email } = req.body;
+    const project = await Project.findById({ _id: id });
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        message: "project not found",
+      });
+    }
+
+    console.log("project", project);
+
+    // await project.findByIdAndDelete({ _id: id });
+    res.status(200).json({
+      success: true,
+      message: "project deleted successfully",
+    });
+  } catch (error) {
+    // console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "project Cannot be deleted successfully",
     });
   }
 };
