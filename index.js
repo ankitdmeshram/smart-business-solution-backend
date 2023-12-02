@@ -5,6 +5,7 @@ const app = express();
 
 const database = require("./config/database");
 const projectRoutes = require("./routes/Project");
+const userRoutes = require("./routes/User");
 
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/project/", projectRoutes);
+app.use("/api/user/", userRoutes);
 
 // Listening to the server
 
