@@ -110,7 +110,7 @@ exports.viewProjectByAccess = async (req, res) => {
 
     const projects = await Project.find({
       $or: [{ owner: email }, { project_team: { $in: [email] } }],
-    });
+    }).sort({ created_at: -1 });
 
     if (projects.length == 0) {
       return res.status(200).json({
