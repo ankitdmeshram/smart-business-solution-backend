@@ -45,7 +45,7 @@ exports.createProject = async (req, res) => {
 
 exports.allProject = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ created_at: -1 });
     res.status(200).json({
       success: true,
       projects: projects,
