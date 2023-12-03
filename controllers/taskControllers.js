@@ -62,7 +62,7 @@ exports.allTask = async (req, res) => {
   }
 };
 
-exports.updateProject = async (req, res) => {
+exports.updateTask = async (req, res) => {
   try {
     const {
       _id,
@@ -80,18 +80,18 @@ exports.updateProject = async (req, res) => {
     } = req.body;
 
     const body = {
-      _id: _id,
-      pid: pid,
-      title: title,
-      description: description,
-      assignTo: assignTo,
-      assignBy: assignBy,
-      dueDate: dueDate,
-      priority: priority,
-      isCompleted: isCompleted,
-      comments: comments,
-      created_at: created_at,
-      updated_at: updated_at,
+      _id,
+      pid,
+      title,
+      description,
+      assignTo,
+      assignBy,
+      dueDate,
+      priority,
+      isCompleted,
+      comments,
+      created_at,
+      updated_at,
     };
 
     if (!_id || !pid || !title) {
@@ -100,7 +100,7 @@ exports.updateProject = async (req, res) => {
         message: "Id and pid and title fields are required",
       });
     }
-    const Task = await Task.findByIdAndUpdate(_id, body);
+    const task = await Task.findByIdAndUpdate(_id, body);
     return res.status(200).json({
       success: true,
       message: "Task Updated Successfully",
