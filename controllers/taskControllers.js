@@ -114,25 +114,23 @@ exports.updateProject = async (req, res) => {
   }
 };
 
-exports.viewProjectByAccess = async (req, res) => {
+exports.viewTasksByPID = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { pid } = req.body;
 
-    const projects = await Project.find({
-      $or: [{ owner: email }, { project_team: { $in: [email] } }],
-    });
+    const Tasks = await Task.find({ pid: pid });
 
-    if (projects.length == 0) {
+    if (Tasks.length == 0) {
       return res.status(200).json({
         success: true,
-        message: "No Projects Found",
+        message: "No Tasks Found",
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Projects found successfully",
-      projects,
+      message: "Tasks found successfully",
+      tasks: Tasks,
     });
   } catch (err) {
     return res.status(504).json({
