@@ -33,7 +33,7 @@ exports.createProject = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Project Created Successfully",
-      ProjectDetails,
+      projectDetails: ProjectDetails,
     });
   } catch (error) {
     return res.status(500).json({
