@@ -1,4 +1,5 @@
 const Task = require("../models/Task");
+const Project = require("../models/Project");
 
 exports.createTask = async (req, res) => {
   try {
@@ -31,6 +32,7 @@ exports.createTask = async (req, res) => {
       priority,
       isCompleted,
       comments,
+     
     });
     return res.status(200).json({
       success: true,
@@ -60,7 +62,7 @@ exports.allTask = async (req, res) => {
   }
 };
 
-exports.updateProject = async (req, res) => {
+exports.updateTask = async (req, res) => {
   try {
     const {
       _id,
@@ -78,18 +80,18 @@ exports.updateProject = async (req, res) => {
     } = req.body;
 
     const body = {
-      _id: _id,
-      pid: pid,
-      title: title,
-      description: description,
-      assignTo: assignTo,
-      assignBy: assignBy,
-      dueDate: dueDate,
-      priority: priority,
-      isCompleted: isCompleted,
-      comments: comments,
-      created_at: created_at,
-      updated_at: updated_at,
+      _id,
+      pid,
+      title,
+      description,
+      assignTo,
+      assignBy,
+      dueDate,
+      priority,
+      isCompleted,
+      comments,
+      created_at,
+      updated_at,
     };
 
     if (!_id || !pid || !title) {
@@ -98,7 +100,7 @@ exports.updateProject = async (req, res) => {
         message: "Id and pid and title fields are required",
       });
     }
-    const Task = await Task.findByIdAndUpdate(_id, body);
+    const task = await Task.findByIdAndUpdate(_id, body);
     return res.status(200).json({
       success: true,
       message: "Task Updated Successfully",
@@ -138,30 +140,36 @@ exports.viewTasksByPID = async (req, res) => {
   }
 };
 
-exports.deleteProject = async (req, res) => {
+exports.deleteTask = async (req, res) => {
   try {
-    const { _id, email } = req.body;
-    const project = await Project.findById({ _id: _id });
+    const { _id, pid, email } = req.body;
 
-    if (!project) {
+    if (!_id && !pid) {
       return res.status(404).json({
         success: false,
-        message: "project not found",
+        message: "Id and project id required fields",
       });
     }
 
-    console.log("project", project);
+    const task = await Task.find({ _id: _id });
 
-    if (project?.owner == email) {
-      await Project.findByIdAndDelete({ _id: _id });
-      res.status(200).json({
-        success: true,
-        message: "project deleted successfully",
+    if (!task || task.length == 0 || task == undefined) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
       });
-    } else {
+    }
+    console.log("tasks", task);
+
+    const projects = await Project.find({ _id: pid });
+
+    console.log("Projects", projects);
+
+    if (projects?.owner == email || projects?.project_team.includes(email)) {
+      await Task.findByIdAndDelete({ _id: _id });
       res.status(200).json({
         success: true,
-        message: "You don't have access to delete",
+        message: "Task Deleted Successfully",
       });
     }
   } catch (error) {
