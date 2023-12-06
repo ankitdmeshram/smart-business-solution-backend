@@ -117,7 +117,7 @@ exports.viewTasksByPID = async (req, res) => {
   try {
     const { pid } = req.body;
 
-    const Tasks = await Task.find({ pid: pid });
+    const Tasks = await Task.find({ pid: pid }).sort({ created_at: -1 });
 
     if (Tasks.length == 0) {
       return res.status(200).json({
