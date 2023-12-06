@@ -32,7 +32,6 @@ exports.createTask = async (req, res) => {
       priority,
       isCompleted,
       comments,
-     
     });
     return res.status(200).json({
       success: true,
@@ -173,10 +172,9 @@ exports.deleteTask = async (req, res) => {
       });
     }
   } catch (error) {
-    // console.log(error);
     res.status(500).json({
       success: false,
-      message: "project Cannot be deleted successfully",
+      message: "Task Cannot be deleted successfully",
       error,
     });
   }
