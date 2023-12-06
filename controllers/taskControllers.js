@@ -31,8 +31,6 @@ exports.createTask = async (req, res) => {
       priority,
       isCompleted,
       comments,
-      created_at: created_at,
-      updated_at: updated_at,
     });
     return res.status(200).json({
       success: true,
