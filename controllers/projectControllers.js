@@ -132,6 +132,32 @@ exports.viewProjectByAccess = async (req, res) => {
   }
 };
 
+exports.viewProjectByID = async (req, res) => {
+  try {
+    const { pid } = req.body;
+
+    const projects = await Project.find({ _id: pid });
+
+    if (projects.length == 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No Projects Found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Projects found successfully",
+      project: projects,
+    });
+  } catch (err) {
+    return res.status(504).json({
+      success: false,
+      message: `Something went wrong ${err}`,
+    });
+  }
+};
+
 exports.deleteProject = async (req, res) => {
   try {
     const { _id, email } = req.body;

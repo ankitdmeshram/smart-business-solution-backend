@@ -143,7 +143,7 @@ exports.deleteTask = async (req, res) => {
   try {
     const { _id, pid, email } = req.body;
 
-    if (!_id && !pid) {
+    if (!_id && !pid && !email) {
       return res.status(404).json({
         success: false,
         message: "Id and project id required fields",
