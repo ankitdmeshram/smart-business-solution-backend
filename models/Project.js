@@ -21,6 +21,9 @@ const projectSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  status: {
+    type: String,
+  },
   project_access: {
     type: String,
     default: "private",
