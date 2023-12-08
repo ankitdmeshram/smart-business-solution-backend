@@ -10,6 +10,7 @@ exports.createProject = async (req, res) => {
       description,
       project_access,
       project_team,
+      status,
       created_at,
       updated_at,
     } = req.body;
@@ -24,6 +25,7 @@ exports.createProject = async (req, res) => {
       start_date,
       end_date,
       owner,
+      status,
       description,
       project_access,
       project_team,
@@ -65,6 +67,7 @@ exports.updateProject = async (req, res) => {
       name,
       start_date,
       end_date,
+      status,
       owner,
       description,
       project_access,
@@ -78,6 +81,7 @@ exports.updateProject = async (req, res) => {
       start_date: start_date,
       end_date: end_date,
       owner: owner,
+      status,
       description: description,
       project_access: project_access,
       created_at: created_at,
@@ -123,6 +127,32 @@ exports.viewProjectByAccess = async (req, res) => {
       success: true,
       message: "Projects found successfully",
       projects,
+    });
+  } catch (err) {
+    return res.status(504).json({
+      success: false,
+      message: `Something went wrong ${err}`,
+    });
+  }
+};
+
+exports.viewProjectByID = async (req, res) => {
+  try {
+    const { pid } = req.body;
+
+    const projects = await Project.find({ _id: pid });
+
+    if (projects.length == 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No Projects Found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Project found successfully",
+      project: projects,
     });
   } catch (err) {
     return res.status(504).json({

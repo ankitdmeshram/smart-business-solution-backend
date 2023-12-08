@@ -32,7 +32,6 @@ exports.createTask = async (req, res) => {
       priority,
       isCompleted,
       comments,
-     
     });
     return res.status(200).json({
       success: true,
@@ -118,7 +117,7 @@ exports.viewTasksByPID = async (req, res) => {
   try {
     const { pid } = req.body;
 
-    const Tasks = await Task.find({ pid: pid });
+    const Tasks = await Task.find({ pid: pid }).sort({ created_at: -1 });
 
     if (Tasks.length == 0) {
       return res.status(200).json({
@@ -144,7 +143,7 @@ exports.deleteTask = async (req, res) => {
   try {
     const { _id, pid, email } = req.body;
 
-    if (!_id && !pid) {
+    if (!_id && !pid && !email) {
       return res.status(404).json({
         success: false,
         message: "Id and project id required fields",
@@ -173,10 +172,9 @@ exports.deleteTask = async (req, res) => {
       });
     }
   } catch (error) {
-    // console.log(error);
     res.status(500).json({
       success: false,
-      message: "project Cannot be deleted successfully",
+      message: "Task Cannot be deleted successfully",
       error,
     });
   }
