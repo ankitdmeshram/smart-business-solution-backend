@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const { sendmail } = require("./mailController");
 
 exports.createProject = async (req, res) => {
   try {
@@ -32,6 +33,15 @@ exports.createProject = async (req, res) => {
       created_at: created_at,
       updated_at: updated_at,
     });
+
+    sendmail(
+      "ankitdm69@gmail.com",
+      owner,
+      "Congratulations, You have created a new project",
+      "",
+      `Hey ${owner}, <br />You have created new project called ${name} <br/>You can check your project here <a href="http://localhost:8788/tasks/${ProjectDetails?._id}">${name} </a>`
+    );
+
     return res.status(200).json({
       success: true,
       message: "Project Created Successfully",

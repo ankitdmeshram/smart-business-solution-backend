@@ -7,6 +7,7 @@ const database = require("./config/database");
 const projectRoutes = require("./routes/Project");
 const userRoutes = require("./routes/User");
 const taskRoutes = require("./routes/Tasks");
+const landingPageRoutes = require("./routes/LandingPage");
 
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 app.use("/api/project/", projectRoutes);
 app.use("/api/task/", taskRoutes);
 app.use("/api/user/", userRoutes);
+app.use("/api/landingpage/", landingPageRoutes);
 
 // Listening to the server
 
