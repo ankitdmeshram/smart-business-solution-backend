@@ -15,6 +15,9 @@ const landingPageSchema = new mongoose.Schema({
   companyName: {
     type: String,
   },
+  liveStatus: {
+    type: String,
+  },
   shortDescription: {
     type: String,
   },

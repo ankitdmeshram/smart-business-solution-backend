@@ -10,6 +10,7 @@ exports.generateLandingPage = async (req, res) => {
       email,
       phone1,
       phone2,
+      liveStatus,
       aboutCompany,
       aboutCompanyDetails,
       services,
@@ -43,6 +44,7 @@ exports.generateLandingPage = async (req, res) => {
       email,
       phone1,
       phone2,
+      liveStatus,
       aboutCompany,
       aboutCompanyDetails,
       services,
@@ -77,12 +79,15 @@ exports.generateLandingPage = async (req, res) => {
 exports.updateLandingPage = async (req, res) => {
   try {
     const {
+      _id,
       owner,
+      teamMember,
       companyName,
       shortDescription,
       email,
       phone1,
       phone2,
+      liveStatus,
       aboutCompany,
       aboutCompanyDetails,
       services,
@@ -94,27 +99,31 @@ exports.updateLandingPage = async (req, res) => {
       testimonialList,
       address,
     } = req.body;
-    if (!owner) {
+    if (!owner || !companyName) {
       return res.status(400).json({
         success: false,
-        message: "Owner fields are required",
+        message: "Owner and Company Name fields are required",
       });
     }
-    const existingOwner = await LandingPage.find({ owner: owner });
 
-    if (existingOwner.length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Owner Already Exists",
-      });
-    }
-    const landingPageDetails = await LandingPage.create({
+    // const existingOwner = await LandingPage.find({ owner: owner });
+
+    // if (existingOwner.length > 0) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Owner Already Exists",
+    //   });
+    // }
+
+    const landingPageDetails = await LandingPage.findByIdAndUpdate(_id, {
       owner,
+      teamMember,
       companyName,
       shortDescription,
       email,
       phone1,
       phone2,
+      liveStatus,
       aboutCompany,
       aboutCompanyDetails,
       services,
@@ -128,12 +137,27 @@ exports.updateLandingPage = async (req, res) => {
     });
     return res.status(200).json({
       success: true,
-      message: "Landing Page Generated Successfully",
+      message: "Landing Page Updated Successfully",
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
       message: error.message,
+    });
+  }
+};
+
+exports.deleteLandingPage = async (req, res) => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Landing page deleted successfully",
+    });
+  } catch (err) {
+    console.log("Something went wrong", err);
+    return res.status(400).json({
+      success: false,
+      message: "Something went wrong",
     });
   }
 };
