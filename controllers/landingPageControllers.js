@@ -1,4 +1,5 @@
 const LandingPage = require("../models/LandingPage");
+const { sendmail } = require("../controllers/mailController");
 
 exports.allLandingPages = async (req, res) => {
   try {
