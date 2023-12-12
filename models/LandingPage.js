@@ -7,6 +7,11 @@ const landingPageSchema = new mongoose.Schema({
   owner: {
     type: String,
   },
+  teamMember: [
+    {
+      type: String,
+    },
+  ],
   companyName: {
     type: String,
   },

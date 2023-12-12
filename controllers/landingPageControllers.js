@@ -4,6 +4,7 @@ exports.generateLandingPage = async (req, res) => {
   try {
     const {
       owner,
+      teamMember,
       companyName,
       shortDescription,
       email,
@@ -31,11 +32,12 @@ exports.generateLandingPage = async (req, res) => {
     if (existingOwner.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Owner Already Exists",
+        message: "You can create only 1 website only",
       });
     }
     const landingPageDetails = await LandingPage.create({
       owner,
+      teamMember,
       companyName,
       shortDescription,
       email,
@@ -52,6 +54,14 @@ exports.generateLandingPage = async (req, res) => {
       testimonialList,
       address,
     });
+    sendmail(
+      "ankitdm69@gmail.com",
+      owner,
+      "Congratulations, Your website is live",
+      "",
+      `Hey ${owner}, <br />Your website <b> ${companyName} </b> created successfully.   <br/>You can visit your website here <a href="http://localhost:8788/web/${landingPageDetails?._id}">${companyName} </a>`
+    );
+
     return res.status(200).json({
       success: true,
       message: "Landing Page Generated Successfully",
