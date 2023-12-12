@@ -85,6 +85,7 @@ exports.generateLandingPage = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Landing Page Generated Successfully",
+      landingPageDetails: landingPageDetails,
     });
   } catch (error) {
     return res.status(500).json({
