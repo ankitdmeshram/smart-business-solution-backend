@@ -34,12 +34,21 @@ exports.createProject = async (req, res) => {
       updated_at: updated_at,
     });
 
+
+
     sendmail(
       "ankitdm69@gmail.com",
-      owner,
+      [owner],
       "Congratulations, You have created a new project",
       "",
-      `Hey ${owner}, <br />You have created new project called ${name} <br/>You can check your project here <a href="http://localhost:8788/tasks/${ProjectDetails?._id}">${name} </a>`
+      `Hey, <br />You have created new project called ${name} <br/>You can check your project here <a href="http://localhost:8788/tasks/${ProjectDetails?._id}">${name} </a> <br /><br/>Best Regards,<br/>SBS Solution`
+    );
+    sendmail(
+      "ankitdm69@gmail.com", // from (do not change)
+      [...project_team], // to
+      "Congratulations, You have added in new project", // subject
+      "",
+      `Hey, <br />You have added in new project called ${name} <br/>You can check project here <a href="http://localhost:8788/tasks/${ProjectDetails?._id}">${name} </a> <br /><br/>Best Regards,<br/>SBS Solution`
     );
 
     return res.status(200).json({
@@ -105,6 +114,13 @@ exports.updateProject = async (req, res) => {
       });
     }
     const project = await Project.findByIdAndUpdate(_id, body);
+    sendmail(
+      "ankitdm69@gmail.com",
+      owner,
+      "Your project updated successfully",
+      "",
+      `Hey ${owner}, <br />Your project ${name} updated successfully <br/>You can check your projects <a href="http://localhost:8788/projects">Projects </a> <br /><br/>Best Regards,<br/>SBS Solution`
+    );
     return res.status(200).json({
       success: true,
       message: "Project Updated Successfully",
@@ -188,6 +204,13 @@ exports.deleteProject = async (req, res) => {
 
     if (project?.owner == email) {
       await Project.findByIdAndDelete({ _id: _id });
+      sendmail(
+        "ankitdm69@gmail.com",
+        project?.owner,
+        "Deleted Project Successfully",
+        "",
+        `Hey ${project?.owner}, <br />You have deleted your project ${project?.name} <br/>You can check your projects here <a href="http://localhost:8788/projects">Projects </a> <br /><br/>Best Regards,<br/>SBS Solution`
+      );
       res.status(200).json({
         success: true,
         message: "project deleted successfully",

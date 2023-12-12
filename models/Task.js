@@ -35,7 +35,7 @@ const taskSchema = new mongoose.Schema({
       by: {
         type: String,
       },
-      type: {
+      comment: {
         type: String,
       },
     },
