@@ -1,5 +1,22 @@
 const LandingPage = require("../models/LandingPage");
 
+exports.allLandingPages = async (req, res) => {
+  try {
+    const landingPageData = await LandingPage.find().sort({ created_at: -1 });
+
+    return res.status(200).json({
+      success: true,
+      message: "Data loaded successfully",
+      landingPageData: landingPageData,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 exports.generateLandingPage = async (req, res) => {
   try {
     const {
