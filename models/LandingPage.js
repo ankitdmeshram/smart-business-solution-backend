@@ -39,11 +39,7 @@ const landingPageSchema = new mongoose.Schema({
   services: {
     type: String,
   },
-  servicesList: [
-    {
-      type: String,
-    },
-  ],
+  servicesList: [],
   servicesTagline: {
     type: String,
   },
