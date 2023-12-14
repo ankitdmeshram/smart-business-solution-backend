@@ -39,6 +39,7 @@ exports.generateLandingPage = async (req, res) => {
       testimonialTagline,
       testimonialList,
       address,
+      logo,
     } = req.body;
     if (!owner) {
       return res.status(400).json({
@@ -65,6 +66,7 @@ exports.generateLandingPage = async (req, res) => {
       liveStatus,
       aboutCompany,
       aboutCompanyDetails,
+      logo,
       services,
       servicesList,
       servicesTagline,
@@ -79,7 +81,7 @@ exports.generateLandingPage = async (req, res) => {
       owner,
       "Congratulations, Your website is live",
       "",
-      `Hey ${owner}, <br />Your website <b> ${companyName} </b> created successfully.   <br/>You can visit your website here <a href="http://localhost:8788/web/${landingPageDetails?._id}">${companyName} </a>`
+      `Hey ${owner}, <br />Your website <b> ${companyName} </b> created successfully.   <br/>You can visit your website here <a href="http://localhost:8788/${landingPageDetails?._id}">${companyName} </a>`
     );
 
     return res.status(200).json({
