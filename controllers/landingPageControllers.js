@@ -95,6 +95,32 @@ exports.generateLandingPage = async (req, res) => {
   }
 };
 
+exports.viewLandingPage = async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    const website = await LandingPage.find({ _id: _id });
+
+    if (website.length == 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No Website Found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Website found successfully",
+      website: website,
+    });
+  } catch (err) {
+    return res.status(504).json({
+      success: false,
+      message: `Something went wrong ${err}`,
+    });
+  }
+};
+
 exports.updateLandingPage = async (req, res) => {
   try {
     const {
