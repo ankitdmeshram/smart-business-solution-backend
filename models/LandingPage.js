@@ -12,6 +12,9 @@ const landingPageSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  aboutIMG: {
+    type: String,
+  },
   companyName: {
     type: String,
   },
